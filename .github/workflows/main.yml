@@ -22,8 +22,8 @@ on:
     - cron: '0 22 * * *' # Runs at 22:00 UTC every day
 
 env:
-  RDM_REF: 2020
-  VERSION: 2020.99.0
+  RDM_REF: 2021
+  VERSION: 2021.99.0
   PYTHON_EMBEDDED_VERSION: 3.7.9
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -121,7 +121,7 @@ jobs:
     # install python3
     - name: install python37
       shell: cmd
-      run: mklink /d C:\Python37-x64 C:\hostedtoolcache\windows\python\3.7.9\x64
+      run: mklink /d C:\Python37-x64 C:\hostedtoolcache\windows\python\${{ env.PYTHON_EMBEDDED_VERSION }}\x64
 
     # pip install
     - name: pip install
@@ -233,9 +233,9 @@ jobs:
     
     - name: setup python
       run: |
-        brew unlink python@3.8
+        brew unlink python@3.9
         brew install python@3.7
-        brew link --force python@3.7
+        brew link --overwrite python@3.7
     
     # 使用私有库,egg-links时-t不能同时使用，--user解决权限问题
     # https://github.com/UnitedIncome/serverless-python-requirements/issues/240
